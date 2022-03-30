@@ -163,6 +163,37 @@ def euler_explicit_midpoint(f:'Callable[float, float]', y0:float, t0:float, t:fl
     
     return u
 
+#TODO: Currently the method does not support ODEs that explicitly depend on time. That means `f` and `vec0` must have the same dimensions.
+def euler_explicit_systems(f:'Callable[float, ...]', vec0:np.ndarray, t0:float, t:float, h:float)-> np.ndarray:
+    """Computes the explicit (forward) Euler method to solve a system of ODEs.
+
+    The order of the arguments (variables) in `f` must the the same of the values in `vec0`. 
+
+    Args:
+        f (Callable[float, ...]): Function depending on the any number of variables. 
+            Currently it does not support explicit dependence on time.
+            Equivalent to f(y,t).
+        vec0 (np.ndarray): Initial values of the answer.
+            Equivalent to [x(t0), y(t0), ...].
+        t0 (float): Initial time.
+        t (float): Final time.
+        h (float): Separation between the points of the interval.
+
+    Returns:
+        np.ndarray: Numerical solution of the ODE in the interval [t0, t0+h, t-h, t].
+    """
+    t_ = np.arange(t0, t0+t, h)  
+    N = len(t_)
+
+    u = np.zeros((vec0.shape[0], N))
+
+    u[:, t0] = vec0
+ 
+    for i in range(N-1):
+        u[..., i+1] = u[..., i] + h * f(*u[..., i])
+    
+    return u
+
 def euler_implicit(f:'Callable[float, float]', y0:float, t0:float, t:float, h:float, *args, **kwargs)-> np.ndarray:
     """Computes the implicit (backward) Euler method to solve ODEs.
 
