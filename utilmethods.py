@@ -29,7 +29,7 @@ def newton(err:float, f:'Callable[float]' = None, f_dev:'Callable[float]' = None
     Returns:
         float|None: Root of the function or None if the algorithm reaches its recursion limit.
     """    
-    def dev(x:float, f:function = f, h_err:float = h_err)-> float:
+    def dev(x:float, f:'Callable[float]' = f, h_err:float = h_err)-> float:
         return ( f(x+h_err) - f(x) ) / h_err 
 
     if (f or composite) and f_dev:
@@ -133,7 +133,7 @@ def euler_explicit(f:'Callable[float, float]', y0:float, t0:float, t:float, h:fl
     
     return u
 
-def euler_implicit(f:'Callable[float, float]', y0:float, t0:float, t:float, h:float)-> np.ndarray:
+def euler_implicit(f:'Callable[float, float]', y0:float, t0:float, t:float, h:float, *args, **kwargs)-> np.ndarray:
     """Computes the implicit (backward) Euler method to solve ODEs.
 
     Args:
@@ -148,7 +148,6 @@ def euler_implicit(f:'Callable[float, float]', y0:float, t0:float, t:float, h:fl
     Returns:
         np.ndarray: Numerical solution of the ODE in the interval [t0, t0+h, t-h, t].
     """
-
     t_ = np.arange(t0, t+h, h)
     N = len(t_)
 
@@ -157,23 +156,17 @@ def euler_implicit(f:'Callable[float, float]', y0:float, t0:float, t:float, h:fl
         
     for i in range(N-1):        
 
-        g = lambda y: u[i] + u[y] + h*f(y,t_[i+1])
-
-        u[i+1] = newton(g, 0.01, u[i])
+        g = lambda y: u[i] + u[i+1] + h*f(y, t_[i+1])
+        u[i+1] = newton(*args, f=g, x0=u[i], **kwargs)
 
     return u
 
 
 if __name__ == '__main__':
-    
+    pass
+    # f_t_y = lambda y,t: - (3* t**2 * y + y**2) / (2* t**3 + 3* t*y)
+    # h_vec = [0.0001, 0.001, 0.01, 0.1]
 
-    def test1(arg1 = None, arg2= None): return print(arg1, arg2)
-
-    
-    def test2(f, *args):
-        return f(*args)
-
-
-    test1(1, 2)
-
-    test2(1 ,2)
+    # for hi in h_vec:
+    #     print(f"Euler implicit wit h={hi} yields {euler_implicit(f_t_y, -2, 1, 2, hi, 1e-1)}")    
+        
