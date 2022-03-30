@@ -133,6 +133,36 @@ def euler_explicit(f:'Callable[float, float]', y0:float, t0:float, t:float, h:fl
     
     return u
 
+def euler_explicit_midpoint(f:'Callable[float, float]', y0:float, t0:float, t:float, h:float)-> np.ndarray:
+    """Computes the explicit (forward) midpoint Euler method to solve ODEs.
+
+    Args:
+        f (Callable[float, float]): Function depending on y and t in that order.
+            Equivalent to f(y,t).
+        y0 (float): Initial value of the answer.
+            Equivalent to y(t0).
+        t0 (float): Initial time.
+        t (float): Final time.
+        h (float): Separation between the points of the interval.
+
+    Returns:
+        np.ndarray: Numerical solution of the ODE in the interval [t0, t0+h, t-h, t].
+    """
+    t_ = np.arange(t0, t0+t, h) 
+    N = len(t_)
+
+    u = np.zeros_like(t_)
+    u_previous = y0 - h * f(y0, t_[0])
+    u[0] = y0
+ 
+    for i in range(N-1):
+        if i == 0:
+            u[i+1] = u_previous +2 * h * f(u[i], t_[i])    
+        else:
+            u[i+1] = u[i-1] + 2 *h * f(u[i], t_[i])
+    
+    return u
+
 def euler_implicit(f:'Callable[float, float]', y0:float, t0:float, t:float, h:float, *args, **kwargs)-> np.ndarray:
     """Computes the implicit (backward) Euler method to solve ODEs.
 
