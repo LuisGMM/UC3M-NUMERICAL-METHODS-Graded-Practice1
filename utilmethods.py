@@ -127,8 +127,27 @@ def euler_explicit(f:'Callable[float, float]', y0:float, t0:float, t:float, h:fl
 
     Returns:
         np.ndarray: Numerical solution of the ODE in the interval [t0, t0+h, t-h, t].
+    
+    Examples:
+
+        Lets solve the problem 
+
+        :math: `$$\begin{array}{l}
+                y'=\lambda y \\
+                y(0) = 1
+                \end{array}$$`
+
+        for :math:`$\lambda = -1$` over the interval :math: `$[0,1]$` for a stepsize `$h=0.1$`.
+        
+        Then: 
+        >>> f = lambda y, t: -y
+        >>> y0 = 1
+        >>> h = 0.1
+        >>> t0, t = 0, 1
+        >>> y = euler_explicit(f, y0, t0, t, h)
+        >>> print(y)
     """
-    t_ = np.arange(t0, t0+t, h) #TODO: Seems wrong to me 
+    t_ = np.arange(t0, t0+t, h)
     N = len(t_)
 
     u = np.zeros_like(t_)
@@ -256,6 +275,6 @@ if __name__ == '__main__':
     pass
     # f_t_y = lambda y,t: - (3* t**2 * y + y**2) / (2* t**3 + 3* t*y)
     # h_vec = [0.0001, 0.001, 0.01, 0.1]
-    
+
     # for hi in h_vec:
     #     print(f"Euler implicit wit h={hi} yields {euler_implicit(f_t_y, -2, 1, 2, hi, 1e-1)}") 
