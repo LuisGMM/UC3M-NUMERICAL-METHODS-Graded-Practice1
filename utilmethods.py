@@ -142,6 +142,10 @@ def euler_explicit(f:'Callable[float, float]', y0:float, t0:float, t:float, h:fl
 def euler_explicit_midpoint(f:'Callable[float, float]', y0:float, t0:float, t:float, h:float)-> np.ndarray:
     """Computes the explicit (forward) midpoint Euler method to solve ODEs.
 
+    The **explicit midpoint method** is :math: `u_{n+1}=u_{n-1}+2hf\left(t_n,u_n\right)`
+
+    As two initial values are required, if y0_previous is not provided, it is computed with :math: `$y(-h)=y(0)-hf(0,y(0))$`.
+
     Args:
         f (Callable[float, float]): Function depending on y and t in that order.
             Equivalent to f(y,t).
@@ -153,6 +157,25 @@ def euler_explicit_midpoint(f:'Callable[float, float]', y0:float, t0:float, t:fl
 
     Returns:
         np.ndarray: Numerical solution of the ODE in the interval [t0, t0+h, t-h, t].
+
+    Examples:
+
+        Lets solve the problem 
+
+        :math: `$$\begin{array}{l}
+                y'=\lambda y \\
+                y(0) = 1
+                \end{array}$$`
+
+        for :math:`$\lambda = -1$` over the interval :math: `$[0,1]$` for a stepsize `$h=0.1$`.
+        
+        Then: 
+        >>> f = lambda y, t: -y
+        >>> y0 = 1
+        >>> h = 0.1
+        >>> t0, t = 0, 1
+        >>> y = euler_explicit_midpoint(f, y0, t0, t, h)
+        >>> print(y)
     """
     t_ = np.arange(t0, t0+t, h) 
     N = len(t_)
@@ -233,7 +256,6 @@ if __name__ == '__main__':
     pass
     # f_t_y = lambda y,t: - (3* t**2 * y + y**2) / (2* t**3 + 3* t*y)
     # h_vec = [0.0001, 0.001, 0.01, 0.1]
-
+    
     # for hi in h_vec:
-    #     print(f"Euler implicit wit h={hi} yields {euler_implicit(f_t_y, -2, 1, 2, hi, 1e-1)}")    
-        
+    #     print(f"Euler implicit wit h={hi} yields {euler_implicit(f_t_y, -2, 1, 2, hi, 1e-1)}") 
