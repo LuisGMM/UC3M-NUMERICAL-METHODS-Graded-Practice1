@@ -6,6 +6,12 @@ from typing import Callable
 import numpy as np
 
 
+# TODO: Shield all methods. 
+# TODO: Adequately use logging and warnings. 
+# TODO: Implement euler_explicit_systems with explicit dependance on time. 
+# TODO: Implement newton for systems.
+# TODO: Improve docstrings; implement examples.
+# TODO: Implement testcases. 
 
 def newton(err:float, f:'Callable[float]' = None, f_dev:'Callable[float]' = None,
     composite:'Callable[Callable, float, float, float]' = None,  c:float = 0, x0:float = 0, h_err:float = 1e-4) -> float:
