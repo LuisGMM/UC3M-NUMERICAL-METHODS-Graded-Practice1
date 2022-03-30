@@ -229,6 +229,39 @@ def euler_explicit_systems(f:'Callable[float, ...]', vec0:np.ndarray, t0:float, 
 
     Returns:
         np.ndarray: Numerical solution of the ODE in the interval [t0, t0+h, t-h, t].
+    
+    Examples: 
+        Lets solve the Lorentz equations :math:`$$\begin{array}{l}
+                                                \frac{dx}{dt}=\sigma(y-x) \\
+                                                \frac{dy}{dt}=x(\rho-z)-y \\
+                                                \frac{dz}{dt}=xy-\beta z
+                                                \end{array}
+                                                $$`
+        
+        for :math:`$\sigma=10$`, :math:`$\rho=28$`, :math:`$\beta=8/3$`, :math:`$t_0=0$`, :math:`$t_f=50$` and :math:`$(x[0],y[0],z[0])=(0, 1, 1.05)$`
+
+        Then
+        >>> import numpy as np
+        >>> t0, t = 0, 50 
+        >>> vec0 = np.array([0, 1, 1.05])
+        >>> s, r, b = 10, 28, 8/3
+        >>> f = lambda x, y, z: np.array([s*(y-x), x*(r-z)-y, x*y - b*z])
+        >>> h = 1e-4
+        >>> u = euler_explicit_systems(f, vec0, t0, tf, h)
+        
+        If we want to plot these results
+        
+        >>> import matplotlib.pyplot as plt
+        >>> fig = plt.figure(figsize = (10,10))
+        >>> ax = plt.axes(projection='3d')
+        >>> ax.grid()
+        >>> ax.plot3D(u[0,:], u[1, :], u[2, :])
+        >>> ax.set_xlabel('x', labelpad=20)
+        >>> ax.set_ylabel('y', labelpad=20)
+        >>> ax.set_zlabel('z', labelpad=20)
+        >>> 
+        >>> 
+        >>> 
     """
     t_ = np.arange(t0, t0+t, h)  
     N = len(t_)
