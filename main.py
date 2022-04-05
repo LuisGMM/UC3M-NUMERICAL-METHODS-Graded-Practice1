@@ -8,7 +8,8 @@ from utilmethods import (composite_simpson, composite_trapezoid,
 
 def question1():
 
-    f_dev = lambda x: 1 / np.sqrt(2*np.pi) * np.exp(-x**2 / 2)
+    def f_dev(x):
+        return 1 / np.sqrt(2*np.pi) * np.exp(-x**2 / 2)
 
 
     ERR = 1e-5
