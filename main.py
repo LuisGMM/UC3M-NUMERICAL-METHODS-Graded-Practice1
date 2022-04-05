@@ -36,5 +36,3 @@ def question2():
         print(euler_explicit(f, y0, t0, t, h))
         print(euler_implicit(f, y0, t0, t, h))
         h *= 2
-
-
