@@ -22,7 +22,10 @@ def question1():
 
 
 def question2():
-    f = lambda y, t: np.sqrt(1 + t**3)
+    
+    def f(y, t):
+        return np.sqrt(1 + t**3)
+    
     y0 = 0
     t0 = 0
     t = 5
