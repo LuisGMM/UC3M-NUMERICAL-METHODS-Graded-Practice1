@@ -44,7 +44,7 @@ def newton(err:float, f:'Callable[float]' = None, f_dev:'Callable[float]' = None
             iteration = lambda iter_idx, iter_dict: iter_dict[iter_idx] - f(iter_dict[iter_idx]) / f_dev(iter_dict[iter_idx])
 
         elif composite:
-            iteration = lambda iter_idx, iter_dict: iter_dict[iter_idx] - (composite(f_dev, x0, iter_dict[iter_idx], 100_000) + c) / f_dev(iter_dict[iter_idx])
+            iteration = lambda iter_idx, iter_dict: iter_dict[iter_idx] - (composite(f_dev, 0, iter_dict[iter_idx], 100_000) + c) / f_dev(iter_dict[iter_idx])
 
         else:
             iteration = lambda iter_idx, iter_dict: iter_dict[iter_idx] - f(iter_dict[iter_idx]) / f_dev(iter_dict[iter_idx])
