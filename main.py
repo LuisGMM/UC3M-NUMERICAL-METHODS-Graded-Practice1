@@ -2,16 +2,8 @@
 
 import numpy as np
 
-
-
-from utilmethods import (
-    newton, 
-    composite_trapezoid, 
-    composite_simpson, 
-    euler_explicit, 
-    euler_implicit)
-
-
+from utilmethods import (composite_simpson, composite_trapezoid,
+                         euler_explicit, euler_implicit, newton)
 
 
 def question1():
