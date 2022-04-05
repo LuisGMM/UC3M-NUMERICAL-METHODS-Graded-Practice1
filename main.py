@@ -32,7 +32,7 @@ def question2():
 
     while h <= 1:
         print(euler_explicit(f, y0, t0, t, h))
-        print(euler_implicit(f, y0, t0, t, h))
+        print(euler_implicit(f, y0, t0, t, h, 1e-5))
         h *= 2
 
-question1()
+question2()
