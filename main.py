@@ -13,10 +13,10 @@ def question1():
 
     ERR = 1e-5
     p0 = 0.5
-    x0 = 0
+    x0 = p0
     C = -0.45
-    print(newton(composite_simpson, f_dev, C, ERR, x0))
-    print(newton(composite_trapezoid, f_dev, C, ERR, x0))
+    print(newton(composite=composite_simpson, f_dev=f_dev, c=C, err=ERR, x0=x0))
+    print(newton(composite=composite_trapezoid, f_dev=f_dev, c=C, err=ERR, x0=x0))
 
 
 def question2():
@@ -34,3 +34,5 @@ def question2():
         print(euler_explicit(f, y0, t0, t, h))
         print(euler_implicit(f, y0, t0, t, h))
         h *= 2
+
+question1()
