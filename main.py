@@ -30,9 +30,9 @@ def question2():
     t0 = 0
     t = 5
 
-    h= 1/64
+    h = 1/64
 
-    while h<=1:
+    while h <= 1:
         print(euler_explicit(f, y0, t0, t, h))
         print(euler_implicit(f, y0, t0, t, h))
         h *= 2
